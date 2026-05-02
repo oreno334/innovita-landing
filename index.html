@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Innovita — Quality You Can Trust | Premium Dietary Supplements</title>
+<meta name="description" content="Innovita — Manufacturing, import and marketing of premium dietary supplements. Quality, innovation, reliability. Israel-based, global standards.">
+<meta property="og:title" content="Innovita — Quality You Can Trust">
+<meta property="og:description" content="Premium manufacturing, import and marketing of dietary supplements.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.innovita.co.il">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: { 50: '#f6f8fa', 100: '#e9eef3', 600: '#3b5573', 700: '#2a3f5c', 800: '#1f3654', 900: '#162640' },
+          teal: { 50: '#eef7f8', 100: '#d2e9eb', 400: '#5fa9b1', 500: '#3a8b95', 600: '#2c707a', 700: '#225862' },
+          sage: { 100: '#e8efe7', 300: '#bbcdb5', 500: '#7d9a6f' },
+          cream: { 50: '#fafaf6', 100: '#f4f1e8' }
+        },
+        fontFamily: {
+          sans: ['Manrope', 'system-ui', 'sans-serif'],
+          serif: ['Cormorant Garamond', 'Georgia', 'serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Manrope', sans-serif; -webkit-font-smoothing: antialiased; background: #fafaf6; }
+
+  /* Hero gradient + texture */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at top right, rgba(58,139,149,0.12), transparent 55%),
+      radial-gradient(ellipse at bottom left, rgba(31,54,84,0.08), transparent 55%),
+      linear-gradient(180deg, #fafaf6 0%, #f4f1e8 100%);
+  }
+
+  /* Marble/noise overlay */
+  .marble::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 15% 25%, rgba(255,255,255,0.6) 0%, transparent 35%),
+      radial-gradient(circle at 85% 75%, rgba(58,139,149,0.04) 0%, transparent 30%);
+    pointer-events: none;
+  }
+
+  /* Logo letter accent (vertical bar) */
+  .logo-bar {
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: linear-gradient(180deg, #1f3654 0%, #3a8b95 100%);
+    border-radius: 2px;
+    margin-right: 6px;
+    vertical-align: -3px;
+  }
+
+  /* Smooth fade-in on scroll */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Card hover */
+  .card-elev { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+  .card-elev:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -20px rgba(31,54,84,0.25); }
+
+  /* Glass card */
+  .glass {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.8);
+  }
+
+  /* Pill */
+  .pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px;
+    background: rgba(58,139,149,0.1); color: #225862;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* Form input */
+  .input-field {
+    width: 100%; padding: 14px 16px;
+    background: rgba(255,255,255,0.85);
+    border: 1px solid rgba(31,54,84,0.15);
+    border-radius: 10px;
+    font-size: 15px; color: #1f3654;
+    transition: all 0.2s ease;
+  }
+  .input-field:focus { outline: none; border-color: #3a8b95; box-shadow: 0 0 0 4px rgba(58,139,149,0.1); }
+
+  /* Subtle background leaf */
+  .leaf-deco {
+    position: absolute;
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  /* Button shine */
+  .btn-primary {
+    background: linear-gradient(135deg, #1f3654 0%, #3a8b95 100%);
+    color: white; padding: 14px 32px; border-radius: 999px;
+    font-weight: 600; letter-spacing: 0.02em;
+    box-shadow: 0 8px 24px -8px rgba(31,54,84,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px -8px rgba(58,139,149,0.5); }
+
+  .btn-ghost {
+    color: #1f3654; padding: 14px 24px; border-radius: 999px;
+    font-weight: 600; letter-spacing: 0.02em;
+    border: 1.5px solid rgba(31,54,84,0.2);
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost:hover { background: rgba(31,54,84,0.04); border-color: rgba(31,54,84,0.4); }
+
+  /* Section divider */
+  .divider {
+    width: 60px; height: 2px; margin: 20px auto;
+    background: linear-gradient(90deg, transparent, #3a8b95, transparent);
+  }
+
+  /* Pillar icon background */
+  .pillar-icon-bg {
+    background: linear-gradient(135deg, #eef7f8 0%, #f4f1e8 100%);
+    border: 1px solid rgba(58,139,149,0.15);
+  }
+
+  /* Animated underline for nav links */
+  .nav-link { position: relative; transition: color 0.2s; }
+  .nav-link::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: #3a8b95;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:hover { color: #3a8b95; }
+
+  /* Shimmer for "premium" feel */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .accent-text {
+    background: linear-gradient(90deg, #1f3654 0%, #3a8b95 50%, #1f3654 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+</style>
+</head>
+<body class="text-ink-800">
+
+<!-- NAV -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-3 sm:py-4 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2">
+      <span class="logo-bar"></span>
+      <span class="text-xl sm:text-2xl font-bold tracking-tight">
+        <span class="text-ink-800">inno</span><span class="text-teal-500">vita</span>
+      </span>
+    </a>
+    <div class="hidden md:flex items-center gap-8 text-sm font-medium text-ink-700">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#capabilities" class="nav-link">Capabilities</a>
+      <a href="#values" class="nav-link">Why Us</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <a href="#contact" class="btn-primary text-xs sm:text-sm" style="padding: 8px 16px;">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="top" class="hero-bg marble relative overflow-hidden pt-24 pb-16 sm:pt-28 sm:pb-20 lg:pt-44 lg:pb-32">
+  <!-- Decorative leaves (desktop only) -->
+  <svg class="leaf-deco top-20 right-10 w-40 h-40 hidden lg:block" viewBox="0 0 100 100" fill="none">
+    <path d="M50 10 Q70 30, 50 50 Q30 70, 50 90 Q70 70, 50 50 Q30 30, 50 10" stroke="#3a8b95" stroke-width="1" />
+  </svg>
+  <svg class="leaf-deco bottom-20 left-10 w-32 h-32 hidden lg:block" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="50" r="40" stroke="#1f3654" stroke-width="0.5" stroke-dasharray="2 4"/>
+  </svg>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+    <!-- Left: text -->
+    <div class="relative z-10 text-center lg:text-left">
+      <div class="pill mb-5 sm:mb-6">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+        Premium Dietary Supplements
+      </div>
+      <h1 class="font-serif text-[2.6rem] sm:text-5xl lg:text-7xl leading-[1.05] text-ink-800 mb-5 sm:mb-6">
+        Quality you<br>
+        can <span class="accent-text font-semibold italic">trust</span>.
+      </h1>
+      <p class="text-base sm:text-lg lg:text-xl text-ink-600 leading-relaxed mb-8 sm:mb-10 max-w-xl mx-auto lg:mx-0">
+        We manufacture, import and market premium dietary supplements with uncompromising standards — combining science, sourcing and care to deliver products people rely on.
+      </p>
+      <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4">
+        <a href="#contact" class="btn-primary justify-center">
+          Start a Conversation
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#capabilities" class="btn-ghost justify-center">
+          Our Capabilities
+        </a>
+      </div>
+
+      <!-- Trust strip -->
+      <div class="mt-10 sm:mt-12 pt-6 sm:pt-8 border-t border-ink-100/60 flex flex-wrap justify-center lg:justify-start items-center gap-x-6 gap-y-3 text-xs text-ink-600">
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" fill="none" stroke="#3a8b95" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          GMP Standards
+        </div>
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" fill="none" stroke="#3a8b95" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Certified
+        </div>
+        <div class="flex items-center gap-2">
+          <svg width="16" height="16" fill="none" stroke="#3a8b95" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Israel & Global
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: stylized product visual (compact on mobile) -->
+    <div class="relative mt-4 lg:mt-0">
+      <div class="relative aspect-square max-w-xs sm:max-w-sm lg:max-w-lg mx-auto">
+        <!-- Background blob -->
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-teal-100/80 to-sage-100/40 blur-2xl"></div>
+        <!-- Inner card -->
+        <div class="absolute inset-4 sm:inset-6 lg:inset-8 rounded-3xl glass shadow-2xl overflow-hidden">
+          <div class="p-5 sm:p-7 lg:p-10 h-full flex flex-col justify-between">
+            <div>
+              <div class="pill mb-3 sm:mb-4">Core Values</div>
+              <h3 class="font-serif text-xl sm:text-2xl lg:text-3xl text-ink-800 leading-tight">Science meets sourcing.</h3>
+            </div>
+            <div class="space-y-2 sm:space-y-3 mt-4">
+              <div class="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-white/60 border border-ink-100">
+                <span class="text-xs sm:text-sm font-medium text-ink-700">Quality Control</span>
+                <span class="text-[10px] sm:text-xs font-bold text-teal-600 tracking-wider">EVERY BATCH</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-white/60 border border-ink-100">
+                <span class="text-xs sm:text-sm font-medium text-ink-700">Innovation R&D</span>
+                <span class="text-[10px] sm:text-xs font-bold text-teal-600 tracking-wider">ONGOING</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 sm:p-3 rounded-xl bg-white/60 border border-ink-100">
+                <span class="text-xs sm:text-sm font-medium text-ink-700">Reliable Supply</span>
+                <span class="text-[10px] sm:text-xs font-bold text-teal-600 tracking-wider">GLOBAL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -top-4 -right-4 w-16 sm:w-20 h-16 sm:h-20 rounded-full bg-teal-500/20 blur-xl"></div>
+        <div class="absolute -bottom-6 -left-6 w-24 sm:w-32 h-24 sm:h-32 rounded-full bg-sage-300/30 blur-2xl"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-16 sm:py-20 lg:py-32 bg-cream-50 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="reveal max-w-3xl mx-auto text-center">
+      <div class="pill mb-5 sm:mb-6">About Innovita</div>
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-ink-800 mb-4 sm:mb-6 leading-tight">
+        A complete partner in <span class="accent-text font-semibold italic">dietary supplements</span>.
+      </h2>
+      <div class="divider"></div>
+      <p class="text-base sm:text-lg text-ink-600 leading-relaxed mt-6 sm:mt-8">
+        Innovita combines three integrated capabilities under one roof: <strong class="text-ink-800">manufacturing</strong> with strict quality systems, <strong class="text-ink-800">importing</strong> from trusted sources around the world, and <strong class="text-ink-800">marketing</strong> products that reach consumers and clinicians who depend on them. We work with brands, distributors and private-label clients who value precision, transparency, and consistent results.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities" class="py-16 sm:py-20 lg:py-32 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+    <div class="reveal text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+      <div class="pill mb-5 sm:mb-6">What We Do</div>
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-ink-800 mb-3 sm:mb-4 leading-tight">Three pillars. One commitment.</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
+      <!-- Manufacturing -->
+      <div class="reveal card-elev p-8 rounded-2xl bg-white border border-ink-100">
+        <div class="w-14 h-14 rounded-2xl pillar-icon-bg flex items-center justify-center mb-6">
+          <svg width="28" height="28" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 22h18M5 22V8l4-3v17M14 22V11l5-3v14M9 9h0M9 13h0M9 17h0"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-ink-800 mb-3">Manufacturing</h3>
+        <p class="text-ink-600 leading-relaxed mb-6">
+          In-house production facilities meeting GMP and international quality standards. From R&D and formulation to bottling and packaging — every step under one roof.
+        </p>
+        <ul class="space-y-2 text-sm text-ink-700">
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Custom formulation</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Capsules, powders, liquids</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Private label production</li>
+        </ul>
+      </div>
+
+      <!-- Import -->
+      <div class="reveal card-elev p-8 rounded-2xl bg-white border border-ink-100">
+        <div class="w-14 h-14 rounded-2xl pillar-icon-bg flex items-center justify-center mb-6">
+          <svg width="28" height="28" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-ink-800 mb-3">Import</h3>
+        <p class="text-ink-600 leading-relaxed mb-6">
+          Carefully sourced raw materials and finished goods from leading international suppliers. We handle regulatory compliance, logistics, and quality verification end-to-end.
+        </p>
+        <ul class="space-y-2 text-sm text-ink-700">
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Global supplier network</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Full regulatory compliance</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> COA on every shipment</li>
+        </ul>
+      </div>
+
+      <!-- Marketing -->
+      <div class="reveal card-elev p-8 rounded-2xl bg-white border border-ink-100">
+        <div class="w-14 h-14 rounded-2xl pillar-icon-bg flex items-center justify-center mb-6">
+          <svg width="28" height="28" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2l3 7h7l-5.5 4 2 7-6.5-4.5L5.5 20l2-7L2 9h7z"/></svg>
+        </div>
+        <h3 class="text-xl font-bold text-ink-800 mb-3">Marketing</h3>
+        <p class="text-ink-600 leading-relaxed mb-6">
+          From brand strategy to retail distribution. We bring products to market with positioning and messaging that resonate with health-conscious consumers and trade partners.
+        </p>
+        <ul class="space-y-2 text-sm text-ink-700">
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Brand development</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Retail & B2B distribution</li>
+          <li class="flex items-start gap-2"><span class="text-teal-500 mt-1">✓</span> Trade partnerships</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES (3 pillars) -->
+<section id="values" class="py-16 sm:py-20 lg:py-32 bg-gradient-to-b from-cream-50 to-cream-100 relative overflow-hidden">
+  <!-- Decorative (desktop only) -->
+  <svg class="leaf-deco top-10 left-1/4 w-72 h-72 hidden lg:block" viewBox="0 0 100 100" fill="none">
+    <circle cx="50" cy="50" r="45" stroke="#3a8b95" stroke-width="0.3" />
+    <circle cx="50" cy="50" r="35" stroke="#3a8b95" stroke-width="0.3" />
+    <circle cx="50" cy="50" r="25" stroke="#3a8b95" stroke-width="0.3" />
+  </svg>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative">
+    <div class="reveal text-center max-w-2xl mx-auto mb-10 sm:mb-16">
+      <div class="pill mb-5 sm:mb-6">Why Innovita</div>
+      <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl text-ink-800 mb-3 sm:mb-4 leading-tight">Our promise to every partner.</h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-4 sm:gap-6">
+      <!-- Quality -->
+      <div class="reveal text-center p-6 sm:p-8 lg:p-10 rounded-3xl glass card-elev">
+        <div class="w-16 sm:w-20 h-16 sm:h-20 rounded-full mx-auto mb-4 sm:mb-6 pillar-icon-bg flex items-center justify-center">
+          <svg width="36" height="36" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M9 11l2 2 5-5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl sm:text-2xl text-ink-800 mb-2 sm:mb-3">Quality</h3>
+        <p class="text-ink-600 leading-relaxed">
+          Strict quality controls on every batch — from raw material verification through final product testing.
+        </p>
+      </div>
+
+      <!-- Innovation -->
+      <div class="reveal text-center p-10 rounded-3xl glass card-elev">
+        <div class="w-16 sm:w-20 h-16 sm:h-20 rounded-full mx-auto mb-4 sm:mb-6 pillar-icon-bg flex items-center justify-center">
+          <svg width="36" height="36" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.7.6 1 1.4 1 2.3v1h6v-1c0-.9.3-1.7 1-2.3A7 7 0 0012 2z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl sm:text-2xl text-ink-800 mb-2 sm:mb-3">Innovation</h3>
+        <p class="text-ink-600 leading-relaxed">
+          Active R&D investment — exploring new formulations, delivery formats, and ingredient science.
+        </p>
+      </div>
+
+      <!-- Reliability -->
+      <div class="reveal text-center p-10 rounded-3xl glass card-elev">
+        <div class="w-16 sm:w-20 h-16 sm:h-20 rounded-full mx-auto mb-4 sm:mb-6 pillar-icon-bg flex items-center justify-center">
+          <svg width="36" height="36" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl sm:text-2xl text-ink-800 mb-2 sm:mb-3">Reliability</h3>
+        <p class="text-ink-600 leading-relaxed">
+          Consistent supply, transparent operations, and partners who deliver on every commitment.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Strip -->
+<section class="py-20 bg-gradient-to-br from-ink-800 to-teal-700 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-10">
+    <svg class="absolute top-0 right-0 w-96 h-96" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="48" stroke="white" stroke-width="0.5" />
+      <circle cx="50" cy="50" r="36" stroke="white" stroke-width="0.5" />
+      <circle cx="50" cy="50" r="24" stroke="white" stroke-width="0.5" />
+    </svg>
+  </div>
+  <div class="max-w-5xl mx-auto px-6 lg:px-12 relative text-center text-white">
+    <h2 class="font-serif text-3xl lg:text-5xl mb-6 leading-tight">Let's build the next supplement together.</h2>
+    <p class="text-lg opacity-90 mb-10 max-w-2xl mx-auto">
+      Whether you're launching a new brand, scaling an existing line, or looking for a reliable manufacturing partner — we'd love to hear from you.
+    </p>
+    <a href="#contact" class="inline-flex items-center gap-2 bg-white text-ink-800 px-8 py-4 rounded-full font-bold hover:bg-cream-50 transition shadow-2xl">
+      Get in Touch
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT FORM -->
+<section id="contact" class="py-24 lg:py-32 bg-cream-50 relative overflow-hidden">
+  <div class="max-w-6xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-12">
+
+    <!-- Left: form -->
+    <div class="reveal">
+      <div class="pill mb-6">Contact Us</div>
+      <h2 class="font-serif text-4xl lg:text-5xl text-ink-800 mb-4 leading-tight">Let's talk.</h2>
+      <div class="w-16 h-1 bg-teal-500 rounded-full mb-6"></div>
+      <p class="text-ink-600 mb-8 leading-relaxed">
+        Tell us about your project, your needs, or just say hello. We respond within one business day.
+      </p>
+
+      <form id="contact-form" class="space-y-4">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-ink-700 tracking-wider uppercase mb-2 block">Full Name</label>
+            <input type="text" name="name" required class="input-field" placeholder="Your name">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-ink-700 tracking-wider uppercase mb-2 block">Company</label>
+            <input type="text" name="company" class="input-field" placeholder="Your company">
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-xs font-semibold text-ink-700 tracking-wider uppercase mb-2 block">Email</label>
+            <input type="email" name="email" required class="input-field" placeholder="you@example.com">
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-ink-700 tracking-wider uppercase mb-2 block">Phone</label>
+            <input type="tel" name="phone" class="input-field" placeholder="+972 50 000 0000">
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-ink-700 tracking-wider uppercase mb-2 block">Message</label>
+          <textarea name="message" rows="4" class="input-field" placeholder="Tell us about your project..."></textarea>
+        </div>
+        <button type="submit" class="btn-primary w-full sm:w-auto justify-center">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p id="form-status" class="text-sm font-medium hidden"></p>
+      </form>
+    </div>
+
+    <!-- Right: contact info -->
+    <div class="reveal">
+      <div class="glass rounded-3xl p-10 h-full">
+        <h3 class="font-serif text-2xl text-ink-800 mb-8">Reach us directly</h3>
+
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl pillar-icon-bg flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-ink-600 tracking-wider uppercase mb-1">Email</div>
+              <a href="mailto:dror@innovita.co.il" class="text-ink-800 font-medium hover:text-teal-500 transition">dror@innovita.co.il</a><br>
+              <a href="mailto:sharon@innovita.co.il" class="text-ink-800 font-medium hover:text-teal-500 transition">sharon@innovita.co.il</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl pillar-icon-bg flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-ink-600 tracking-wider uppercase mb-1">Phone</div>
+              <a href="tel:+972504406477" class="text-ink-800 font-medium hover:text-teal-500 transition">+972 50 440 6477</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl pillar-icon-bg flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-ink-600 tracking-wider uppercase mb-1">Web</div>
+              <a href="https://www.innovita.co.il" class="text-ink-800 font-medium hover:text-teal-500 transition">www.innovita.co.il</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-xl pillar-icon-bg flex items-center justify-center flex-shrink-0">
+              <svg width="22" height="22" fill="none" stroke="#3a8b95" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="text-xs font-semibold text-ink-600 tracking-wider uppercase mb-1">Headquarters</div>
+              <span class="text-ink-800 font-medium">Israel</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 pt-8 border-t border-ink-100">
+          <p class="text-sm text-ink-600 leading-relaxed">
+            <strong class="text-ink-800">Visiting an industry expo?</strong> Drop by our booth or schedule a one-on-one meeting in advance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-ink-900 text-cream-50 py-12">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <div class="grid md:grid-cols-3 gap-8 items-center">
+      <div class="flex items-center gap-2">
+        <span class="logo-bar" style="background: linear-gradient(180deg, #5fa9b1 0%, #ffffff 100%);"></span>
+        <span class="text-2xl font-bold tracking-tight">
+          <span class="text-cream-50">inno</span><span class="text-teal-400">vita</span>
+        </span>
+      </div>
+      <div class="text-center text-sm opacity-80">
+        Quality you can trust.
+      </div>
+      <div class="text-right text-xs opacity-70">
+        © 2026 Innovita. All rights reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Smooth form (placeholder — will wire to Formspree/Web3Forms before deploy)
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const status = document.getElementById('form-status');
+    status.classList.remove('hidden');
+    status.style.color = '#225862';
+    status.textContent = 'Thank you! We will get back to you within 1 business day.';
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
