@@ -574,14 +574,49 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // Smooth form (placeholder — will wire to Formspree/Web3Forms before deploy)
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
+  // Contact form → FormSubmit (AJAX), delivers to Dror@tinc.co.il
+  // No email exposed in HTML (server-side routing on FormSubmit's side).
+  // First-ever submission triggers an activation email to Dror — one click and it's live.
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
     e.preventDefault();
+    const form = this;
     const status = document.getElementById('form-status');
+    const btn = form.querySelector('button[type="submit"]');
+    const originalBtn = btn.innerHTML;
+
     status.classList.remove('hidden');
     status.style.color = '#225862';
-    status.textContent = 'Thank you! We will get back to you within 1 business day.';
-    this.reset();
+    status.textContent = 'Sending...';
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+
+    const data = new FormData(form);
+    data.append('_subject', 'New inquiry from innovita.co.il');
+    data.append('_template', 'table');
+    data.append('_captcha', 'false');
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/Dror@tinc.co.il', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      });
+      const json = await res.json();
+      if (json.success === 'true' || json.success === true) {
+        status.style.color = '#225862';
+        status.textContent = 'Thank you! We will get back to you within 1 business day.';
+        form.reset();
+      } else {
+        throw new Error(json.message || 'Send failed');
+      }
+    } catch (err) {
+      status.style.color = '#b91c1c';
+      status.textContent = 'Something went wrong. Please email us directly at Dror@tinc.co.il.';
+    } finally {
+      btn.disabled = false;
+      btn.style.opacity = '1';
+      btn.innerHTML = originalBtn;
+    }
   });
 </script>
 
