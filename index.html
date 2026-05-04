@@ -590,39 +590,36 @@
     btn.disabled = true;
     btn.style.opacity = '0.6';
 
-    // Build mailto: with form fields — works on every device, no third-party dependency.
+    // Web3Forms — submissions deliver to orenoved3@gmail.com (set up via web3forms.com)
     const fd = new FormData(form);
-    const name = (fd.get('name') || '').toString().trim();
-    const company = (fd.get('company') || '').toString().trim();
-    const email = (fd.get('email') || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
-    const message = (fd.get('message') || '').toString().trim();
+    fd.append('access_key', '704446da-4491-4ff7-b574-b7b705f45f8f');
+    fd.append('subject', 'New inquiry from innovita.co.il');
+    fd.append('from_name', 'Innovita Landing');
+    fd.append('botcheck', '');
 
-    const bodyLines = [
-      'New inquiry from innovita.co.il',
-      '',
-      'Name:    ' + name,
-      'Company: ' + company,
-      'Email:   ' + email,
-      'Phone:   ' + phone,
-      '',
-      'Message:',
-      message,
-      ''
-    ];
-    const subject = encodeURIComponent('New inquiry from ' + (name || 'innovita.co.il'));
-    const body = encodeURIComponent(bodyLines.join('\n'));
-    const mailto = 'mailto:orenoved3@gmail.com?subject=' + subject + '&body=' + body;
-
-    setTimeout(function () {
-      window.location.href = mailto;
-      status.style.color = '#225862';
-      status.textContent = 'Thank you! Your email client should open now. Just hit Send to deliver your message.';
-      form.reset();
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: fd
+      });
+      const json = await res.json();
+      if (json.success) {
+        status.style.color = '#225862';
+        status.textContent = 'Thank you! We will get back to you within 1 business day.';
+        form.reset();
+      } else {
+        throw new Error(json.message || 'Send failed');
+      }
+    } catch (err) {
+      status.style.color = '#b91c1c';
+      status.textContent = 'Something went wrong. Please email us directly at orenoved3@gmail.com.';
+    } finally {
       btn.disabled = false;
       btn.style.opacity = '1';
       btn.innerHTML = originalBtn;
-    }, 200);
+    }
+  
   });
 </script>
 
