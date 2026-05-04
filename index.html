@@ -611,8 +611,7 @@
       ''
     ];
     const subject = encodeURIComponent('New inquiry from ' + (name || 'innovita.co.il'));
-    const body = encodeURIComponent(bodyLines.join('
-'));
+    const body = encodeURIComponent(bodyLines.join('\n'));
     const mailto = 'mailto:orenoved3@gmail.com?subject=' + subject + '&body=' + body;
 
     setTimeout(function () {
