@@ -579,15 +579,18 @@
     btn.disabled = true;
     btn.style.opacity = '0.6';
 
-    // Web3Forms — submissions deliver to orenoved3@gmail.com (set up via web3forms.com)
+    // FormSubmit — primary delivery to orenoved3@gmail.com (already activated),
+    //              CC to info@innovita.co.il → ImprovMX → ziv.sharon@gmail.com
+    // Result: every inquiry reaches Sharon (info@) AND Oren simultaneously.
     const fd = new FormData(form);
-    fd.append('access_key', '704446da-4491-4ff7-b574-b7b705f45f8f');
-    fd.append('subject', 'New inquiry from innovita.co.il');
-    fd.append('from_name', 'Innovita Landing');
-    fd.append('botcheck', '');
+    fd.append('_subject', 'New inquiry from innovita.co.il');
+    fd.append('_cc', 'info@innovita.co.il');
+    fd.append('_template', 'table');
+    fd.append('_captcha', 'false');
+    fd.append('_replyto', form.querySelector('[name="email"]').value || '');
 
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://formsubmit.co/ajax/orenoved3@gmail.com', {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: fd
