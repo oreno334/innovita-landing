@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Label Studio | Innovita</title>
+  <meta name="description" content="See your logo on a supplement bottle and carton. Explore a packaging concept with Innovita's private label studio.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f6f5ef">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/studio.css">
+  <script src="assets/three-r160.min.js" defer></script>
+  <script src="assets/scene.js" defer></script>
+  <script src="assets/studio.js" defer></script>
+</head>
+<body data-scene="loading">
+  <a class="skip-link" href="#studio">Skip to the studio</a>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="Innovita home"><i aria-hidden="true"></i>inno<span>vita</span></a>
+    <div class="header-context"><span class="header-divider" aria-hidden="true"></span>Private Label Studio</div>
+    <a class="back-link" href="/">Back to Innovita <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+  </header>
+
+  <main>
+    <section class="studio-intro" aria-labelledby="studio-title">
+      <div class="intro-heading"><div class="eyebrow"><span aria-hidden="true"></span>FROM YOUR IDEA TO YOUR BRAND</div><h1 id="studio-title">Your brand. <br><em>On the shelf.</em></h1></div>
+      <div class="intro-copy"><p>A first look at what could be yours.</p><p>Add your logo and shape a packaging concept.<br>We can talk formulation and production next.</p><span class="concept-tag"><i aria-hidden="true"></i>Interactive packaging preview</span><button type="button" id="mobile-upload" class="mobile-upload"><span id="mobile-upload-label">Upload your logo</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17V4m-5 5 5-5 5 5M4 16v5h16v-5"/></svg></button><p id="mobile-upload-status" class="mobile-upload-status" aria-hidden="true"></p></div>
+    </section>
+
+    <section id="studio" class="studio-workspace" aria-label="Private label packaging studio">
+      <div class="preview-column">
+        <div class="preview-shell">
+          <div class="preview-heading"><span class="live-indicator"><i aria-hidden="true"></i>YOUR CONCEPT, IN 3D</span><span class="studio-edition">INNOVITA / STUDIO 01</span></div>
+          <div class="scene-surface" id="scene-surface">
+            <div class="scene-word" aria-hidden="true">yours.</div>
+            <div id="preview-mount" role="img" aria-label="Interactive preview of a supplement bottle and carton with your branding"></div>
+            <svg id="fallback-preview" viewBox="0 0 800 650" role="img" aria-label="Packaging concept preview" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bottle-glass" x1="0" x2="1"><stop stop-color="#3a210f"/><stop offset=".3" stop-color="#6f492e"/><stop offset=".56" stop-color="#382012"/><stop offset=".88" stop-color="#4e2e17"/><stop offset="1" stop-color="#241a12"/></linearGradient>
+                <linearGradient id="cap-light" x1="0" x2="1"><stop stop-color="#c6c5b7"/><stop offset=".3" stop-color="#faf8e9"/><stop offset="1" stop-color="#c9c8bd"/></linearGradient>
+                <linearGradient id="label-light" x1="0" x2="1"><stop stop-color="#d9d9ce"/><stop offset=".28" stop-color="#fffef5"/><stop offset=".8" stop-color="#f7f6ec"/><stop offset="1" stop-color="#d4d4c9"/></linearGradient>
+                <radialGradient id="ground-shadow"><stop stop-color="#263b342e"/><stop offset="1" stop-color="#263b3400"/></radialGradient>
+                <pattern id="cap-ribs" width="4" height="50" patternUnits="userSpaceOnUse"><path d="M1 0v50" stroke="#797b6940" stroke-width="1"/></pattern>
+              </defs>
+              <ellipse cx="403" cy="574" rx="300" ry="49" fill="url(#ground-shadow)"/>
+              <g transform="translate(204 140) rotate(-4 100 200)">
+                <path d="M0 20 181 0 230 30 49 50Z" fill="#f8f8ef"/>
+                <path d="M181 0 230 30V390L181 361Z" fill="#d6ded1"/>
+                <path d="M0 20 181 0V361L0 382Z" fill="#f4f5eb" stroke="#d0d7c8"/>
+                <path d="M0 299 181 279V338L0 359Z" fill="#2c707a" data-fallback-accent/>
+                <g transform="translate(0 20) skewY(-6)">
+                  <text data-fallback-placeholder x="91" y="116" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="21">YOUR BRAND</text>
+                  <image id="fallback-logo-carton" x="31" y="53" width="120" height="100" preserveAspectRatio="xMidYMid meet"/>
+                  <text id="fallback-product-carton" x="91" y="212" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-size="17">Daily essentials</text>
+                  <text x="91" y="240" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="8" letter-spacing="1">DIETARY SUPPLEMENT</text>
+                  <text x="91" y="316" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
+                </g>
+              </g>
+              <g transform="translate(430 105) rotate(5 98 230)">
+                <path d="M26 80V60H170V80Q169 96 180 117Q196 138 196 170V419Q196 450 168 454H28Q0 450 0 419V170Q0 136 15 116Q26 96 26 80Z" fill="url(#bottle-glass)" stroke="#392619"/>
+                <rect x="20" y="28" width="157" height="60" rx="10" fill="url(#cap-light)"/>
+                <rect x="21" y="37" width="155" height="42" rx="3" fill="url(#cap-ribs)"/>
+                <ellipse cx="99" cy="29" rx="77" ry="12" fill="#f0efe4"/>
+                <path d="M1 196Q98 211 195 196V411Q98 428 1 411Z" fill="url(#label-light)"/>
+                <path id="fallback-band" d="M1 356Q98 371 195 356V397Q98 414 1 397Z" fill="#2c707a" data-fallback-accent/>
+                <text data-fallback-placeholder x="99" y="254" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="20">YOUR BRAND</text>
+                <image id="fallback-logo" x="34" y="213" width="131" height="84" preserveAspectRatio="xMidYMid meet"/>
+                <text id="fallback-product" x="99" y="321" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-size="17">Daily essentials</text>
+                <text x="99" y="340" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="7" letter-spacing="1">DIETARY SUPPLEMENT</text>
+                <text x="99" y="389" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
+              </g>
+            </svg>
+            <div class="scene-caption" aria-hidden="true"><span>01 / PACKAGING CONCEPT</span><span>Made to imagine.<br>Made for your brand.</span></div>
+          </div>
+          <div class="preview-tools">
+            <span class="drag-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9a9 6 0 1 1 0 6M4 5v4h4M20 19v-4h-4"/></svg>Drag to rotate</span>
+            <div class="view-switch" role="group" aria-label="Preview angle"><button type="button" data-view="angle" aria-pressed="true">Perspective</button><button type="button" data-view="front" aria-pressed="false">Front</button></div>
+            <div class="rotation-controls"><button type="button" id="rotate-left" class="icon-button" aria-label="Rotate packaging left"><svg viewBox="0 0 24 24"><path d="M8 7H3V2M3 7a9 9 0 1 1-1 8"/></svg></button><button type="button" id="rotate-right" class="icon-button" aria-label="Rotate packaging right"><svg viewBox="0 0 24 24"><path d="M16 7h5V2m0 5a9 9 0 1 0 1 8"/></svg></button><button type="button" id="reset-view" class="icon-button" aria-label="Reset view"><svg viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5M8 12h8m-4-4v8"/></svg></button></div>
+          </div>
+        </div>
+        <div class="packaging-picker" role="group" aria-label="Packaging shown"><span>ON YOUR CANVAS</span><div><button type="button" data-packaging="set" aria-pressed="true">Bottle + carton</button><button type="button" data-packaging="bottle" aria-pressed="false">Bottle</button><button type="button" data-packaging="carton" aria-pressed="false">Carton</button></div></div>
+        <p class="preview-note"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M10 9v5m0-8v1"/></svg>Visual concept only. Formula, packaging specifications and final label artwork are agreed with Innovita.</p>
+      </div>
+
+      <aside class="design-panel" aria-label="Customize your packaging">
+        <div class="panel-heading"><span class="eyebrow">MAKE IT YOURS</span><button type="button" id="reset-design">Reset design</button></div>
+        <section class="control-section identity-section" aria-labelledby="identity-heading">
+          <h2 id="identity-heading"><span>01</span>Your identity</h2>
+          <label id="logo-dropzone" for="logo-file" tabindex="0" role="button" aria-label="Upload your brand logo">
+            <svg class="upload-symbol" viewBox="0 0 36 36" aria-hidden="true"><path d="M18 24V8m-6 6 6-6 6 6M7 22v7h22v-7"/><circle cx="18" cy="18" r="16"/></svg>
+            <strong>Drop your logo here</strong><span>or <u>choose a file</u></span><small>PNG, JPG, WebP or SVG · Up to 8 MB</small>
+          </label>
+          <input id="logo-file" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml,.png,.jpg,.jpeg,.webp,.svg" aria-label="Choose logo file">
+          <div id="logo-preview" hidden><span id="logo-thumb"><img alt="Your uploaded logo"></span><span id="logo-filename"></span><button type="button" id="logo-remove" aria-label="Remove uploaded logo">Remove</button></div>
+          <p id="upload-status" class="upload-status" role="status" aria-live="polite">Transparent PNG or SVG works best.</p>
+          <button type="button" id="sample-logo" class="sample-link">Just exploring? Try a sample logo <span aria-hidden="true">↗</span></button>
+          <div class="field"><label for="product-name">Product name</label><input id="product-name" type="text" maxlength="42" value="Daily essentials" autocomplete="off" spellcheck="false"><span class="field-hint">A working name for your concept.</span></div>
+        </section>
+
+        <section class="control-section finish-section" aria-labelledby="finish-heading">
+          <h2 id="finish-heading"><span>02</span>The finishing touches</h2>
+          <div class="control-label">Label colour</div><div class="colour-swatches" role="group" aria-label="Label accent colour">
+            <button type="button" data-accent="#2c707a" aria-pressed="true" aria-label="Ocean teal" style="--swatch:#2c707a"><span></span></button>
+            <button type="button" data-accent="#6a805f" aria-pressed="false" aria-label="Botanical green" style="--swatch:#6a805f"><span></span></button>
+            <button type="button" data-accent="#253d5b" aria-pressed="false" aria-label="Midnight blue" style="--swatch:#253d5b"><span></span></button>
+            <button type="button" data-accent="#ad715d" aria-pressed="false" aria-label="Warm terracotta" style="--swatch:#ad715d"><span></span></button>
+            <button type="button" data-accent="#7c7396" aria-pressed="false" aria-label="Soft lavender" style="--swatch:#7c7396"><span></span></button>
+          </div>
+          <div class="finish-grid"><div><span class="control-label">Bottle</span><div class="segmented" role="group" aria-label="Bottle finish"><button type="button" data-bottle="amber" aria-pressed="true"><i class="finish-dot amber"></i>Amber</button><button type="button" data-bottle="white" aria-pressed="false"><i class="finish-dot white"></i>White</button></div></div><div><span class="control-label">Cap</span><div class="segmented" role="group" aria-label="Cap finish"><button type="button" data-cap="ivory" aria-pressed="true"><i class="finish-dot ivory"></i>Ivory</button><button type="button" data-cap="black" aria-pressed="false"><i class="finish-dot black"></i>Black</button></div></div></div>
+          <div class="style-field"><span class="control-label">Label style</span><div class="label-style-options" role="group" aria-label="Label style"><button type="button" data-label-style="signature" aria-pressed="true"><i class="style-icon signature" aria-hidden="true"></i>Signature</button><button type="button" data-label-style="minimal" aria-pressed="false"><i class="style-icon minimal" aria-hidden="true"></i>Minimal</button></div></div>
+          <details class="placement-details"><summary>Adjust logo placement <span aria-hidden="true">+</span></summary><div class="range-field"><label for="logo-scale">Logo size <output id="logo-scale-value" for="logo-scale">100%</output></label><input id="logo-scale" type="range" min="65" max="150" value="100" step="1"></div><div class="range-field"><label for="logo-position">Vertical position <output id="logo-position-value" for="logo-position">0</output></label><input id="logo-position" type="range" min="-15" max="15" value="0" step="1"></div></details>
+        </section>
+
+        <div class="panel-delivery"><button type="button" id="download-preview" class="button-primary" disabled><span>Download your preview</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></button><p class="privacy-note"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="8" width="10" height="9" rx="2"/><path d="M7 8V6a3 3 0 0 1 6 0v2"/></svg>Your logo stays in your browser.</p><p id="studio-status" class="studio-status" role="status" aria-live="polite">Preparing your studio...</p><a id="download-ready" class="download-ready" hidden download>Save PNG</a></div>
+      </aside>
+    </section>
+
+    <section class="next-step" aria-labelledby="next-title"><div><span class="eyebrow">BEYOND THE MOCKUP</span><h2 id="next-title">A concept today.<br><em>A conversation next.</em></h2></div><div><p>Have a product in mind? Bring your preview to Innovita and discuss the formula, packaging and production details.</p><a href="/#contact" target="_blank" rel="noopener" class="contact-link">Talk to Innovita <span aria-hidden="true">↗</span></a></div></section>
+  </main>
+
+  <footer class="site-footer"><a class="wordmark" href="/" aria-label="Innovita home">inno<span>vita</span></a><span>Private Label Studio · Packaging concept</span><span>© 2026 Innovita</span></footer>
+  <noscript><div class="no-script">Enable JavaScript to add your logo and customize the packaging. The example above is a static concept.</div></noscript>
+</body>
+</html>
