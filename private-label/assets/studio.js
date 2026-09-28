@@ -11,6 +11,11 @@
     accent: '#2c707a',
     bottleFinish: 'amber',
     capFinish: 'ivory',
+    packagingColor: '#f3f0e8',
+    labelColor: '#f3f0e8',
+    capColor: '#e6e3d6',
+    bottleColor: '#f2f0e8',
+    surfaceFinish: 'satin',
     labelStyle: 'signature',
     logoScale: 1,
     logoOffsetY: 0,
@@ -37,6 +42,18 @@
     var logoData = '';
     var packaging = 'set';
     var selectedView = 'angle';
+    var linkedLabel = true;
+    var autoRotate = false;
+    var orbitMode = false;
+    var cameraCommandDepth = 0;
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var viewNames = ['front', 'angle', 'back', 'left', 'right', 'top'];
+    var previewShell = mount.closest('.preview-shell');
+    var fullscreenButton = byId('expand-preview');
+    var fullscreenText = fullscreenButton && fullscreenButton.querySelector('span');
+    var fullscreenLabel = fullscreenText ? fullscreenText.textContent : 'Expand preview';
+    var previewExpanded = false;
+    var expansionSnapshot = null;
     var pendingUrls = new Set();
     var timers = new Set();
     var cleanup = [];
@@ -302,10 +319,41 @@
       all(selector).forEach(function (button) { button.setAttribute('aria-pressed', String(button.getAttribute(attribute) === value)); });
     }
 
+    function normalizedColor(value) {
+      return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value.toLowerCase() : null;
+    }
+
+    function readableInk(color) {
+      function luminance(hex) {
+        var values = [1, 3, 5].map(function (offset) {
+          var channel = parseInt(hex.slice(offset, offset + 2), 16) / 255;
+          return channel <= 0.04045 ? channel / 12.92 : Math.pow((channel + 0.055) / 1.055, 2.4);
+        });
+        return values[0] * 0.2126 + values[1] * 0.7152 + values[2] * 0.0722;
+      }
+      var background = luminance(color);
+      var dark = '#193c35';
+      var light = '#fffdf5';
+      var darkLuminance = luminance(dark);
+      var lightLuminance = luminance(light);
+      var darkContrast = (Math.max(background, darkLuminance) + 0.05) / (Math.min(background, darkLuminance) + 0.05);
+      var lightContrast = (Math.max(background, lightLuminance) + 0.05) / (Math.min(background, lightLuminance) + 0.05);
+      return darkContrast >= lightContrast ? dark : light;
+    }
+
     function renderFallback() {
       if (!fallback) return;
       [byId('fallback-product'), byId('fallback-product-carton')].filter(Boolean).forEach(function (node) { node.textContent = design.productName; });
       all('#fallback-band, [data-fallback-accent]').forEach(function (node) { node.setAttribute('fill', design.accent); });
+      all('[data-fallback-paper]').forEach(function (node) {
+        node.setAttribute('fill', node.dataset.fallbackPaper === 'carton' ? design.packagingColor : design.labelColor);
+      });
+      all('[data-fallback-paper-text], #fallback-product, #fallback-product-carton, [data-fallback-placeholder]').forEach(function (node) {
+        var carton = node.dataset.fallbackPaperText === 'carton' || node.id === 'fallback-product-carton' ||
+          (node.hasAttribute('data-fallback-placeholder') && node.parentElement && node.parentElement.querySelector('#fallback-logo-carton'));
+        node.setAttribute('fill', readableInk(carton ? design.packagingColor : design.labelColor));
+      });
+      all('[data-fallback-accent-text]').forEach(function (node) { node.setAttribute('fill', readableInk(design.accent)); });
       all('[data-fallback-placeholder]').forEach(function (node) { node.style.display = design.logo ? 'none' : ''; });
       fallbackLogoNodes.forEach(function (node) {
         if (logoData) {
@@ -333,7 +381,41 @@
       pressed('[data-bottle]', 'data-bottle', design.bottleFinish);
       pressed('[data-cap]', 'data-cap', design.capFinish);
       pressed('[data-label-style]', 'data-label-style', design.labelStyle);
+      pressed('[data-surface-finish]', 'data-surface-finish', design.surfaceFinish);
       pressed('[data-view]', 'data-view', selectedView);
+      syncColors();
+      syncCameraButtons();
+    }
+
+    function syncColors() {
+      [['packaging-color', 'packagingColor'], ['label-color', 'labelColor'], ['cap-color', 'capColor'], ['bottle-color', 'bottleColor']].forEach(function (config) {
+        var input = byId(config[0]);
+        if (input) input.value = design[config[1]];
+        var output = byId(config[0] + '-value');
+        if (output) output.textContent = design[config[1]].toUpperCase();
+      });
+      all('[data-packaging-color]').forEach(function (button) {
+        button.setAttribute('aria-pressed', String(normalizedColor(button.dataset.packagingColor) === design.packagingColor));
+      });
+      if (byId('link-label-color')) byId('link-label-color').checked = linkedLabel;
+      var darkLabel = readableInk(design.labelColor) === '#fffdf5';
+      var darkCarton = readableInk(design.packagingColor) === '#fffdf5';
+      var darkPaper = darkLabel || darkCarton;
+      if (byId('colour-hint')) byId('colour-hint').textContent = darkLabel !== darkCarton
+        ? 'Check your logo on both backgrounds, or match the label to the carton.'
+        : darkPaper ? 'Tip: use a light logo on dark packaging. You can try the light demo logo.'
+        : 'Your logo keeps its original colours.';
+      if (byId('sample-logo-light')) byId('sample-logo-light').hidden = !darkPaper;
+      syncAvailability();
+    }
+
+    function syncCameraButtons() {
+      if (byId('auto-rotate')) {
+        byId('auto-rotate').setAttribute('aria-pressed', String(autoRotate));
+        byId('auto-rotate').setAttribute('aria-label', autoRotate ? 'Stop automatic rotation' : 'Start automatic rotation');
+      }
+      if (byId('orbit-mode')) byId('orbit-mode').setAttribute('aria-pressed', String(orbitMode));
+      syncAvailability();
     }
 
     function syncSliderLabels() {
@@ -359,11 +441,36 @@
 
     function syncAvailability() {
       var unavailable = sceneState !== 'ready';
-      all('[data-packaging], [data-bottle], [data-cap], [data-label-style], [data-view], #rotate-left, #rotate-right, #reset-view').forEach(function (button) {
+      all('[data-packaging], [data-bottle], [data-cap], [data-label-style], [data-surface-finish], [data-view], #rotate-left, #rotate-right, #reset-view, #cap-color, #bottle-color').forEach(function (button) {
         button.disabled = unavailable;
         if (sceneState === 'fallback') button.title = 'This control needs the 3D preview. Logo, text and color remain available below.';
         else button.removeAttribute('title');
       });
+      [['tilt-up', 'tiltBy'], ['tilt-down', 'tiltBy'], ['zoom-in', 'zoomBy'], ['zoom-out', 'zoomBy'], ['auto-rotate', 'setAutoRotate'], ['orbit-mode', 'setOrbitMode']].forEach(function (config) {
+        var control = byId(config[0]);
+        if (!control) return;
+        var unsupported = !scene || typeof scene[config[1]] !== 'function';
+        control.disabled = unavailable || unsupported || (config[0] === 'auto-rotate' && reducedMotion.matches);
+        if (config[0] === 'auto-rotate' && reducedMotion.matches) control.title = 'Automatic rotation is off because your device prefers reduced motion.';
+        else if (unavailable || unsupported) control.title = 'This control needs the 3D preview.';
+        else control.removeAttribute('title');
+      });
+      var labelInput = byId('label-color');
+      if (labelInput) {
+        labelInput.disabled = linkedLabel || (sceneState === 'fallback' && !all('[data-fallback-paper="label"]').length);
+        if (linkedLabel) labelInput.title = 'Turn off linked colors to choose a separate label color.';
+        else labelInput.removeAttribute('title');
+      }
+      var paperUnavailable = sceneState === 'fallback' && !all('[data-fallback-paper="carton"]').length;
+      all('#packaging-color, [data-packaging-color], #link-label-color').forEach(function (control) {
+        control.disabled = paperUnavailable;
+        if (paperUnavailable) control.title = 'Package colors need the 3D preview in this browser.';
+        else control.removeAttribute('title');
+      });
+      if (fullscreenButton) {
+        fullscreenButton.disabled = !previewShell;
+        fullscreenButton.title = previewExpanded ? 'Close expanded preview' : 'Expand preview';
+      }
       if (downloadButton) {
         downloadButton.disabled = exporting || sceneState === 'loading' || (sceneState === 'fallback' && !fallback);
         downloadButton.setAttribute('aria-busy', String(exporting));
@@ -384,8 +491,13 @@
     function useFallback() {
       if (destroyed || sceneFailed) return;
       sceneFailed = true;
+      autoRotate = false;
+      orbitMode = false;
+      designVersion += 1;
+      invalidateDownload();
       if (scene && typeof scene.destroy === 'function') scene.destroy();
       scene = null;
+      syncCameraButtons();
       setSceneState('fallback');
       renderFallback();
       status(studioStatus, fallback
@@ -409,11 +521,35 @@
     }
 
     function callScene(method, value) {
-      if (sceneState !== 'ready' || !scene || typeof scene[method] !== 'function') return;
+      if (sceneState !== 'ready' || !scene || typeof scene[method] !== 'function') return false;
       designVersion += 1;
       invalidateDownload();
-      try { scene[method](value); }
-      catch (error) { useFallback(); }
+      cameraCommandDepth += 1;
+      try { scene[method](value); return true; }
+      catch (error) { useFallback(); return false; }
+      finally { cameraCommandDepth -= 1; }
+    }
+
+    function setAutoRotation(enabled) {
+      enabled = Boolean(enabled) && !reducedMotion.matches;
+      if (enabled === autoRotate) { syncCameraButtons(); return; }
+      if (callScene('setAutoRotate', enabled)) autoRotate = enabled;
+      else autoRotate = false;
+      if (autoRotate) { selectedView = ''; pressed('[data-view]', 'data-view', selectedView); }
+      syncCameraButtons();
+    }
+
+    function setOrbitMode(enabled) {
+      if (callScene('setOrbitMode', Boolean(enabled))) orbitMode = Boolean(enabled);
+      else orbitMode = false;
+      syncCameraButtons();
+    }
+
+    function moveCamera(method, value) {
+      setAutoRotation(false);
+      selectedView = '';
+      pressed('[data-view]', 'data-view', '');
+      callScene(method, value);
     }
 
     async function chooseLogo(file, name, existingController) {
@@ -430,7 +566,7 @@
         logoData = result.data;
         syncThumbnail(name || file.name);
         updateDesign();
-        status(uploadStatus, (name === 'Demo logo' ? 'Demo logo added.' : 'Your logo is ready.') + ' Your artwork stays in this browser.');
+        status(uploadStatus, (/demo logo/i.test(name || '') ? 'Demo logo added.' : 'Your logo is ready.') + ' Your artwork stays in this browser.');
       } catch (error) {
         if (generation !== uploadGeneration || destroyed || error.name === 'AbortError') return;
         status(uploadStatus, error.message || 'The logo could not be opened. Your previous logo is unchanged.', true);
@@ -486,25 +622,29 @@
     });
     listen(byId('logo-remove'), 'click', function () { removeLogo(); });
 
-    listen(byId('sample-logo'), 'click', async function () {
-      uploadGeneration += 1;
-      var generation = uploadGeneration;
-      if (uploadAbort) uploadAbort.abort();
-      var controller = new AbortController();
-      uploadAbort = controller;
-      status(uploadStatus, 'Opening the demo logo…');
-      try {
-        var sampleUrl = new URL('assets/sample-logo.svg', document.baseURI);
-        if (sampleUrl.origin !== location.origin) throw new Error('The demo logo is unavailable. Please upload your own logo.');
-        var response = await fetch(sampleUrl.href, { signal: controller.signal, credentials: 'same-origin' });
-        if (!response.ok) throw new Error('The demo logo is unavailable. Please upload your own logo.');
-        var sample = await response.blob();
-        if (generation !== uploadGeneration || destroyed) return;
-        await chooseLogo(new File([sample], 'demo-logo.svg', { type: 'image/svg+xml' }), 'Demo logo', controller);
-      } catch (error) {
-        if (generation === uploadGeneration && !destroyed && error.name !== 'AbortError') status(uploadStatus, error.message || 'The demo logo is unavailable.', true);
-      }
-    });
+    function bindSampleLogo(buttonId, asset, caption) {
+      listen(byId(buttonId), 'click', async function () {
+        uploadGeneration += 1;
+        var generation = uploadGeneration;
+        if (uploadAbort) uploadAbort.abort();
+        var controller = new AbortController();
+        uploadAbort = controller;
+        status(uploadStatus, 'Opening the demo logo…');
+        try {
+          var sampleUrl = new URL('assets/' + asset, document.baseURI);
+          if (sampleUrl.origin !== location.origin) throw new Error('The demo logo is unavailable. Please upload your own logo.');
+          var response = await fetch(sampleUrl.href, { signal: controller.signal, credentials: 'same-origin' });
+          if (!response.ok) throw new Error('The demo logo is unavailable. Please upload your own logo.');
+          var sample = await response.blob();
+          if (generation !== uploadGeneration || destroyed) return;
+          await chooseLogo(new File([sample], asset, { type: 'image/svg+xml' }), caption, controller);
+        } catch (error) {
+          if (generation === uploadGeneration && !destroyed && error.name !== 'AbortError') status(uploadStatus, error.message || 'The demo logo is unavailable.', true);
+        }
+      });
+    }
+    bindSampleLogo('sample-logo', 'sample-logo.svg', 'Demo logo');
+    bindSampleLogo('sample-logo-light', 'sample-logo-light.svg', 'Light demo logo');
 
     listen(byId('product-name'), 'input', function (event) {
       design.productName = event.target.value.replace(/[\u0000-\u001f\u007f]/g, '').slice(0, 42).trim() || DEFAULTS.productName;
@@ -521,9 +661,10 @@
     });
     [
       ['accent', 'accent', function (value) { return /^#[0-9a-f]{6}$/i.test(value); }],
-      ['bottle', 'bottleFinish', function (value) { return ['amber', 'white'].includes(value); }],
-      ['cap', 'capFinish', function (value) { return ['ivory', 'black'].includes(value); }],
+      ['bottle', 'bottleFinish', function (value) { return ['amber', 'white', 'custom'].includes(value); }],
+      ['cap', 'capFinish', function (value) { return ['ivory', 'black', 'custom'].includes(value); }],
       ['label-style', 'labelStyle', function (value) { return ['signature', 'minimal'].includes(value); }],
+      ['surface-finish', 'surfaceFinish', function (value) { return ['matte', 'satin'].includes(value); }],
     ].forEach(function (config) {
       all('[data-' + config[0] + ']').forEach(function (button) {
         listen(button, 'click', function () {
@@ -536,6 +677,40 @@
         });
       });
     });
+    function changePackagingColor(value) {
+      var color = normalizedColor(value);
+      if (!color) return;
+      design.packagingColor = color;
+      if (linkedLabel) design.labelColor = color;
+      syncColors(); updateDesign();
+    }
+    all('[data-packaging-color]').forEach(function (button) {
+      listen(button, 'click', function () {
+        if (!button.disabled) changePackagingColor(button.dataset.packagingColor);
+      });
+    });
+    listen(byId('packaging-color'), 'input', function (event) { if (!event.target.disabled) changePackagingColor(event.target.value); });
+    listen(byId('label-color'), 'input', function (event) {
+      var color = normalizedColor(event.target.value);
+      if (event.target.disabled || linkedLabel || !color) return;
+      design.labelColor = color;
+      syncColors(); updateDesign();
+    });
+    listen(byId('link-label-color'), 'change', function (event) {
+      linkedLabel = event.target.checked;
+      if (linkedLabel) design.labelColor = design.packagingColor;
+      syncColors(); updateDesign();
+    });
+    [['cap-color', 'capColor', 'capFinish', 'cap'], ['bottle-color', 'bottleColor', 'bottleFinish', 'bottle']].forEach(function (config) {
+      listen(byId(config[0]), 'input', function (event) {
+        var color = normalizedColor(event.target.value);
+        if (event.target.disabled || !color) return;
+        design[config[1]] = color;
+        design[config[2]] = 'custom';
+        pressed('[data-' + config[3] + ']', 'data-' + config[3], 'custom');
+        syncColors(); updateDesign();
+      });
+    });
     all('[data-packaging]').forEach(function (button) {
       listen(button, 'click', function () {
         if (button.disabled || !['set', 'bottle', 'carton'].includes(button.dataset.packaging)) return;
@@ -546,20 +721,158 @@
     });
     all('[data-view]').forEach(function (button) {
       listen(button, 'click', function () {
-        if (button.disabled || !['front', 'angle'].includes(button.dataset.view)) return;
+        if (button.disabled || !viewNames.includes(button.dataset.view)) return;
+        setAutoRotation(false);
         selectedView = button.dataset.view;
         pressed('[data-view]', 'data-view', selectedView);
         callScene('setView', selectedView);
       });
     });
-    listen(byId('rotate-left'), 'click', function () { pressed('[data-view]', 'data-view', ''); callScene('rotateBy', -Math.PI / 8); });
-    listen(byId('rotate-right'), 'click', function () { pressed('[data-view]', 'data-view', ''); callScene('rotateBy', Math.PI / 8); });
-    listen(mount, 'innovita:rotate', function () { selectedView = ''; pressed('[data-view]', 'data-view', ''); designVersion += 1; invalidateDownload(); });
-    listen(byId('reset-view'), 'click', function () { selectedView = 'angle'; pressed('[data-view]', 'data-view', selectedView); callScene('resetView'); });
+    listen(byId('rotate-left'), 'click', function () { moveCamera('rotateBy', -Math.PI / 8); });
+    listen(byId('rotate-right'), 'click', function () { moveCamera('rotateBy', Math.PI / 8); });
+    listen(byId('tilt-up'), 'click', function () { moveCamera('tiltBy', Math.PI / 12); });
+    listen(byId('tilt-down'), 'click', function () { moveCamera('tiltBy', -Math.PI / 12); });
+    listen(byId('zoom-in'), 'click', function () { moveCamera('zoomBy', 1.15); });
+    listen(byId('zoom-out'), 'click', function () { moveCamera('zoomBy', 1 / 1.15); });
+    listen(byId('auto-rotate'), 'click', function () { setAutoRotation(!autoRotate); });
+    listen(byId('orbit-mode'), 'click', function () { setOrbitMode(!orbitMode); });
+    listen(mount, 'innovita:rotate', function (event) {
+      var detail = event.detail || {};
+      if (typeof detail.autoRotate === 'boolean') autoRotate = detail.autoRotate;
+      if (typeof detail.orbitMode === 'boolean') orbitMode = detail.orbitMode;
+      if (detail.source === 'auto') {
+        // Continuous animation has no new design revision. It stops before PNG capture.
+        selectedView = '';
+        pressed('[data-view]', 'data-view', '');
+        return;
+      }
+      selectedView = detail.source === 'control' && viewNames.includes(detail.view) ? detail.view : '';
+      pressed('[data-view]', 'data-view', selectedView);
+      if (!cameraCommandDepth) { designVersion += 1; invalidateDownload(); }
+      syncCameraButtons();
+    });
+    listen(byId('reset-view'), 'click', function () {
+      setAutoRotation(false);
+      selectedView = 'angle'; pressed('[data-view]', 'data-view', selectedView);
+      callScene('resetView');
+    });
+    function onReducedMotionChange() {
+      if (reducedMotion.matches) setAutoRotation(false);
+      syncCameraButtons();
+    }
+    if (reducedMotion.addEventListener) listen(reducedMotion, 'change', onReducedMotionChange);
+    else {
+      reducedMotion.addListener(onReducedMotionChange);
+      cleanup.push(function () { reducedMotion.removeListener(onReducedMotionChange); });
+    }
+    function syncExpandedPreview() {
+      if (!fullscreenButton) return;
+      fullscreenButton.setAttribute('aria-pressed', String(previewExpanded));
+      fullscreenButton.setAttribute('aria-label', previewExpanded ? 'Close expanded preview' : 'Expand preview');
+      fullscreenButton.title = previewExpanded ? 'Close expanded preview' : 'Expand preview';
+      if (fullscreenText) fullscreenText.textContent = previewExpanded ? 'Close expanded preview' : fullscreenLabel;
+      syncAvailability();
+    }
+
+    function focusablePreviewControls() {
+      if (!previewShell) return [];
+      return Array.from(previewShell.querySelectorAll('a[href], button, input, select, textarea, [tabindex], [contenteditable="true"]')).filter(function (node) {
+        if (node.disabled || node.tabIndex < 0 || node.closest('[hidden], [inert], [aria-hidden="true"]')) return false;
+        var style = getComputedStyle(node);
+        return style.display !== 'none' && style.visibility !== 'hidden' && style.visibility !== 'collapse' && node.getClientRects().length > 0;
+      });
+    }
+
+    function focusPreviewControl(node) {
+      if (!node || typeof node.focus !== 'function') return;
+      try { node.focus({ preventScroll: true }); }
+      catch (error) { node.focus(); }
+    }
+
+    function restoreAttribute(node, name, value) {
+      if (value === null) node.removeAttribute(name);
+      else node.setAttribute(name, value);
+    }
+
+    function setPreviewExpanded(expanded, silent) {
+      if (!previewShell || previewExpanded === expanded) return;
+      if (expanded) {
+        expansionSnapshot = {
+          role: previewShell.getAttribute('role'),
+          modal: previewShell.getAttribute('aria-modal'),
+          label: previewShell.getAttribute('aria-label'),
+          labelledBy: previewShell.getAttribute('aria-labelledby'),
+          tabIndex: previewShell.getAttribute('tabindex'),
+          expandedClass: previewShell.classList.contains('is-expanded'),
+          bodyState: document.body.getAttribute('data-preview-expanded'),
+          bodyOverflow: document.body.style.getPropertyValue('overflow'),
+          bodyOverflowPriority: document.body.style.getPropertyPriority('overflow'),
+        };
+        previewExpanded = true;
+        previewShell.classList.add('is-expanded');
+        previewShell.setAttribute('role', 'dialog');
+        previewShell.setAttribute('aria-modal', 'true');
+        previewShell.setAttribute('aria-label', 'Expanded product preview');
+        previewShell.removeAttribute('aria-labelledby');
+        previewShell.setAttribute('tabindex', '-1');
+        document.body.setAttribute('data-preview-expanded', 'true');
+        document.body.style.setProperty('overflow', 'hidden');
+        syncExpandedPreview();
+        var controls = focusablePreviewControls();
+        focusPreviewControl(controls.includes(fullscreenButton) ? fullscreenButton : controls[0] || previewShell);
+        if (!silent) status(studioStatus, 'Expanded preview is ready. Press Escape to close.');
+      } else {
+        previewExpanded = false;
+        var previous = expansionSnapshot;
+        expansionSnapshot = null;
+        if (previous) {
+          previewShell.classList.toggle('is-expanded', previous.expandedClass);
+          restoreAttribute(previewShell, 'role', previous.role);
+          restoreAttribute(previewShell, 'aria-modal', previous.modal);
+          restoreAttribute(previewShell, 'aria-label', previous.label);
+          restoreAttribute(previewShell, 'aria-labelledby', previous.labelledBy);
+          restoreAttribute(previewShell, 'tabindex', previous.tabIndex);
+          restoreAttribute(document.body, 'data-preview-expanded', previous.bodyState);
+          if (previous.bodyOverflow) document.body.style.setProperty('overflow', previous.bodyOverflow, previous.bodyOverflowPriority);
+          else document.body.style.removeProperty('overflow');
+        }
+        syncExpandedPreview();
+        if (!destroyed) focusPreviewControl(fullscreenButton);
+        if (!silent) status(studioStatus, sceneState === 'fallback'
+          ? 'Your flat preview is ready. Continue editing or download your preview.'
+          : sceneState === 'ready' ? 'Your concept is ready. Continue editing or download your preview.' : 'Preparing your preview…');
+      }
+    }
+
+    listen(fullscreenButton, 'click', function () {
+      if (!fullscreenButton.disabled) setPreviewExpanded(!previewExpanded);
+    });
+    listen(document, 'keydown', function (event) {
+      if (!previewExpanded) return;
+      if (event.key === 'Escape') {
+        event.preventDefault(); event.stopPropagation();
+        setPreviewExpanded(false);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      var controls = focusablePreviewControls();
+      if (!controls.length) { event.preventDefault(); focusPreviewControl(previewShell); return; }
+      var activeIndex = controls.indexOf(document.activeElement);
+      if (event.shiftKey && activeIndex <= 0) {
+        event.preventDefault(); focusPreviewControl(controls[controls.length - 1]);
+      } else if (!event.shiftKey && (activeIndex < 0 || activeIndex === controls.length - 1)) {
+        event.preventDefault(); focusPreviewControl(controls[0]);
+      }
+    }, true);
+    listen(document, 'focusin', function (event) {
+      if (!previewExpanded || previewShell.contains(event.target)) return;
+      focusPreviewControl(focusablePreviewControls()[0] || previewShell);
+    });
     listen(byId('reset-design'), 'click', function () {
       removeLogo('Design reset. Add your logo to start again.');
+      setAutoRotation(false); setOrbitMode(false);
       design = Object.assign({}, DEFAULTS);
-      packaging = 'set'; selectedView = 'angle';
+      packaging = 'set'; selectedView = 'angle'; linkedLabel = true;
       syncInputs(); updateDesign();
       callScene('setPackaging', packaging); callScene('resetView');
       if (sceneState === 'ready') status(studioStatus, 'Your concept is ready. Add your logo to make it yours.');
@@ -613,6 +926,7 @@
 
     listen(downloadButton, 'click', async function () {
       if (exporting || downloadButton.disabled) return;
+      setAutoRotation(false);
       exporting = true;
       var exportVersion = designVersion;
       syncAvailability();
@@ -658,6 +972,7 @@
     function destroy() {
       if (destroyed) return;
       destroyed = true;
+      setPreviewExpanded(false, true);
       uploadGeneration += 1;
       if (uploadAbort) uploadAbort.abort();
       if (updateFrame) cancelAnimationFrame(updateFrame);
@@ -670,7 +985,7 @@
       delete mount.dataset.controllerMounted;
     }
     listen(window, 'pagehide', function (event) { if (!event.persisted) destroy(); });
-    syncInputs(); syncThumbnail(''); renderFallback(); invalidateDownload(); setSceneState('loading');
+    syncInputs(); syncThumbnail(''); renderFallback(); invalidateDownload(); setSceneState('loading'); syncExpandedPreview();
     try {
       if (!window.InnovitaStudioScene || typeof window.InnovitaStudioScene.create !== 'function') { useFallback(); return; }
       scene = window.InnovitaStudioScene.create({
@@ -682,6 +997,10 @@
             if (destroyed || sceneFailed) return;
             setSceneState('ready');
             callScene('setPackaging', packaging); callScene('setView', selectedView);
+            if (scene && typeof scene.setOrbitMode === 'function') callScene('setOrbitMode', orbitMode);
+            if (scene && typeof scene.setAutoRotate === 'function') callScene('setAutoRotate', autoRotate && !reducedMotion.matches);
+            if (sceneFailed) return;
+            syncCameraButtons();
             updateDesign();
             status(studioStatus, 'Your concept is ready. Add your logo to make it yours.');
           });

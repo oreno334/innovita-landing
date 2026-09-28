@@ -11,10 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/studio.css">
+  <link rel="stylesheet" href="assets/studio.css?v=20260928-premium2">
   <script src="assets/three-r160.min.js" defer></script>
-  <script src="assets/scene.js" defer></script>
-  <script src="assets/studio.js" defer></script>
+  <script src="assets/scene.js?v=20260928-premium2" defer></script>
+  <script src="assets/studio.js?v=20260928-premium2" defer></script>
 </head>
 <body data-scene="loading">
   <a class="skip-link" href="#studio">Skip to the studio</a>
@@ -33,7 +33,7 @@
     <section id="studio" class="studio-workspace" aria-label="Private label packaging studio">
       <div class="preview-column">
         <div class="preview-shell">
-          <div class="preview-heading"><span class="live-indicator"><i aria-hidden="true"></i>YOUR CONCEPT, IN 3D</span><span class="studio-edition">INNOVITA / STUDIO 01</span></div>
+          <div class="preview-heading"><span class="live-indicator"><i aria-hidden="true"></i>360° PRODUCT STUDIO</span><div class="preview-heading-actions"><span class="studio-edition">INNOVITA / STUDIO 02</span><button type="button" id="expand-preview" class="icon-button" aria-label="Open fullscreen preview" title="Fullscreen preview"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></svg></button></div></div>
           <div class="scene-surface" id="scene-surface">
             <div class="scene-word" aria-hidden="true">yours.</div>
             <div id="preview-mount" role="img" aria-label="Interactive preview of a supplement bottle and carton with your branding"></div>
@@ -47,16 +47,16 @@
               </defs>
               <ellipse cx="403" cy="574" rx="300" ry="49" fill="url(#ground-shadow)"/>
               <g transform="translate(204 140) rotate(-4 100 200)">
-                <path d="M0 20 181 0 230 30 49 50Z" fill="#f8f8ef"/>
-                <path d="M181 0 230 30V390L181 361Z" fill="#d6ded1"/>
-                <path d="M0 20 181 0V361L0 382Z" fill="#f4f5eb" stroke="#d0d7c8"/>
+                <path d="M0 20 181 0 230 30 49 50Z" fill="#f8f8ef" data-fallback-paper="carton"/>
+                <path d="M181 0 230 30V390L181 361Z" fill="#d6ded1" data-fallback-paper="carton"/>
+                <path d="M0 20 181 0V361L0 382Z" fill="#f4f5eb" stroke="#d0d7c8" data-fallback-paper="carton"/>
                 <path d="M0 299 181 279V338L0 359Z" fill="#2c707a" data-fallback-accent/>
                 <g transform="translate(0 20) skewY(-6)">
-                  <text data-fallback-placeholder x="91" y="116" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="21">YOUR BRAND</text>
+                  <text data-fallback-placeholder data-fallback-paper-text="carton" x="91" y="116" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="21">YOUR BRAND</text>
                   <image id="fallback-logo-carton" x="31" y="53" width="120" height="100" preserveAspectRatio="xMidYMid meet"/>
                   <text id="fallback-product-carton" x="91" y="212" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-size="17">Daily essentials</text>
-                  <text x="91" y="240" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="8" letter-spacing="1">DIETARY SUPPLEMENT</text>
-                  <text x="91" y="316" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
+                  <text data-fallback-paper-text="carton" x="91" y="240" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="8" letter-spacing="1">DIETARY SUPPLEMENT</text>
+                  <text data-fallback-accent-text x="91" y="316" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
                 </g>
               </g>
               <g transform="translate(430 105) rotate(5 98 230)">
@@ -64,21 +64,20 @@
                 <rect x="20" y="28" width="157" height="60" rx="10" fill="url(#cap-light)"/>
                 <rect x="21" y="37" width="155" height="42" rx="3" fill="url(#cap-ribs)"/>
                 <ellipse cx="99" cy="29" rx="77" ry="12" fill="#f0efe4"/>
-                <path d="M1 196Q98 211 195 196V411Q98 428 1 411Z" fill="url(#label-light)"/>
+                <path d="M1 196Q98 211 195 196V411Q98 428 1 411Z" fill="url(#label-light)" data-fallback-paper="label"/>
                 <path id="fallback-band" d="M1 356Q98 371 195 356V397Q98 414 1 397Z" fill="#2c707a" data-fallback-accent/>
-                <text data-fallback-placeholder x="99" y="254" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="20">YOUR BRAND</text>
+                <text data-fallback-placeholder data-fallback-paper-text="label" x="99" y="254" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-weight="600" font-size="20">YOUR BRAND</text>
                 <image id="fallback-logo" x="34" y="213" width="131" height="84" preserveAspectRatio="xMidYMid meet"/>
                 <text id="fallback-product" x="99" y="321" text-anchor="middle" fill="#1f3654" font-family="Arial,sans-serif" font-size="17">Daily essentials</text>
-                <text x="99" y="340" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="7" letter-spacing="1">DIETARY SUPPLEMENT</text>
-                <text x="99" y="389" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
+                <text data-fallback-paper-text="label" x="99" y="340" text-anchor="middle" fill="#64736c" font-family="Arial,sans-serif" font-size="7" letter-spacing="1">DIETARY SUPPLEMENT</text>
+                <text data-fallback-accent-text x="99" y="389" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="9" letter-spacing="1">LABEL CONCEPT</text>
               </g>
             </svg>
             <div class="scene-caption" aria-hidden="true"><span>01 / PACKAGING CONCEPT</span><span>Made to imagine.<br>Made for your brand.</span></div>
           </div>
           <div class="preview-tools">
-            <span class="drag-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9a9 6 0 1 1 0 6M4 5v4h4M20 19v-4h-4"/></svg>Drag to rotate</span>
-            <div class="view-switch" role="group" aria-label="Preview angle"><button type="button" data-view="angle" aria-pressed="true">Perspective</button><button type="button" data-view="front" aria-pressed="false">Front</button></div>
-            <div class="rotation-controls"><button type="button" id="rotate-left" class="icon-button" aria-label="Rotate packaging left"><svg viewBox="0 0 24 24"><path d="M8 7H3V2M3 7a9 9 0 1 1-1 8"/></svg></button><button type="button" id="rotate-right" class="icon-button" aria-label="Rotate packaging right"><svg viewBox="0 0 24 24"><path d="M16 7h5V2m0 5a9 9 0 1 0 1 8"/></svg></button><button type="button" id="reset-view" class="icon-button" aria-label="Reset view"><svg viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5M8 12h8m-4-4v8"/></svg></button></div>
+            <div class="view-presets"><span>EXPLORE EVERY SIDE</span><div class="view-switch" role="group" aria-label="Preview angle"><button type="button" data-view="angle" aria-pressed="true">Perspective</button><button type="button" data-view="front" aria-pressed="false">Front</button><button type="button" data-view="back" aria-pressed="false">Back</button><button type="button" data-view="left" aria-pressed="false">Left</button><button type="button" data-view="right" aria-pressed="false">Right</button><button type="button" data-view="top" aria-pressed="false">Top</button></div></div>
+            <div class="orbit-toolbar"><span class="drag-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9a9 6 0 1 1 0 6M4 5v4h4M20 19v-4h-4"/></svg>Drag to turn &amp; tilt</span><button type="button" id="auto-rotate" class="motion-button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8a9 9 0 1 0 1 7m-1-7V3m0 5h-5"/></svg><span>Auto rotate</span></button><button type="button" id="orbit-mode" class="motion-button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="4" ry="10"/></svg><span>Free orbit</span></button><div class="rotation-controls"><button type="button" id="rotate-left" class="icon-button" aria-label="Rotate packaging left" title="Rotate left"><svg viewBox="0 0 24 24"><path d="M8 7H3V2M3 7a9 9 0 1 1-1 8"/></svg></button><button type="button" id="rotate-right" class="icon-button" aria-label="Rotate packaging right" title="Rotate right"><svg viewBox="0 0 24 24"><path d="M16 7h5V2m0 5a9 9 0 1 0 1 8"/></svg></button><button type="button" id="tilt-up" class="icon-button" aria-label="Tilt view up" title="Tilt up"><svg viewBox="0 0 24 24"><path d="m5 15 7-7 7 7"/></svg></button><button type="button" id="tilt-down" class="icon-button" aria-label="Tilt view down" title="Tilt down"><svg viewBox="0 0 24 24"><path d="m5 9 7 7 7-7"/></svg></button><button type="button" id="zoom-in" class="icon-button" aria-label="Zoom in" title="Zoom in"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6M10 7v6m-3-3h6"/></svg></button><button type="button" id="zoom-out" class="icon-button" aria-label="Zoom out" title="Zoom out"><svg viewBox="0 0 24 24"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6M7 10h6"/></svg></button><button type="button" id="reset-view" class="icon-button" aria-label="Reset view" title="Reset view"><svg viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5M8 12h8m-4-4v8"/></svg></button></div></div>
           </div>
         </div>
         <div class="packaging-picker" role="group" aria-label="Packaging shown"><span>ON YOUR CANVAS</span><div><button type="button" data-packaging="set" aria-pressed="true">Bottle + carton</button><button type="button" data-packaging="bottle" aria-pressed="false">Bottle</button><button type="button" data-packaging="carton" aria-pressed="false">Carton</button></div></div>
@@ -97,12 +96,25 @@
           <div id="logo-preview" hidden><span id="logo-thumb"><img alt="Your uploaded logo"></span><span id="logo-filename"></span><button type="button" id="logo-remove" aria-label="Remove uploaded logo">Remove</button></div>
           <p id="upload-status" class="upload-status" role="status" aria-live="polite">Transparent PNG or SVG works best.</p>
           <button type="button" id="sample-logo" class="sample-link">Just exploring? Try a sample logo <span aria-hidden="true">↗</span></button>
+          <button type="button" id="sample-logo-light" class="sample-link" hidden>Try a light demo logo <span aria-hidden="true">↗</span></button>
           <div class="field"><label for="product-name">Product name</label><input id="product-name" type="text" maxlength="42" value="Daily essentials" autocomplete="off" spellcheck="false"><span class="field-hint">A working name for your concept.</span></div>
         </section>
 
         <section class="control-section finish-section" aria-labelledby="finish-heading">
-          <h2 id="finish-heading"><span>02</span>The finishing touches</h2>
-          <div class="control-label">Label colour</div><div class="colour-swatches" role="group" aria-label="Label accent colour">
+          <h2 id="finish-heading"><span>02</span>Your packaging colours</h2>
+          <p class="colour-intro">Change the full carton and bottle label.</p>
+          <div class="colour-swatches packaging-swatches" role="group" aria-label="Packaging colour palette">
+            <button type="button" data-packaging-color="#f3f0e8" aria-pressed="true" aria-label="Warm ivory packaging" style="--swatch:#f3f0e8;--tick:#1f3654"><span></span></button>
+            <button type="button" data-packaging-color="#d9dfcf" aria-pressed="false" aria-label="Soft sage packaging" style="--swatch:#d9dfcf;--tick:#1f3654"><span></span></button>
+            <button type="button" data-packaging-color="#234d42" aria-pressed="false" aria-label="Forest green packaging" style="--swatch:#234d42"><span></span></button>
+            <button type="button" data-packaging-color="#20364b" aria-pressed="false" aria-label="Deep navy packaging" style="--swatch:#20364b"><span></span></button>
+            <button type="button" data-packaging-color="#a96556" aria-pressed="false" aria-label="Terracotta packaging" style="--swatch:#a96556"><span></span></button>
+            <button type="button" data-packaging-color="#8e849e" aria-pressed="false" aria-label="Muted lavender packaging" style="--swatch:#8e849e"><span></span></button>
+          </div>
+          <div class="colour-input-grid"><label class="colour-input"><span>Carton colour</span><span class="colour-input-control"><input id="packaging-color" type="color" value="#f3f0e8" aria-label="Custom carton colour"><output id="packaging-color-value" for="packaging-color">#F3F0E8</output></span></label><label class="colour-input"><span>Bottle label</span><span class="colour-input-control"><input id="label-color" type="color" value="#f3f0e8" aria-label="Custom bottle label colour"><output id="label-color-value" for="label-color">#F3F0E8</output></span></label></div>
+          <label class="link-colours"><input type="checkbox" id="link-label-color" checked>Match the label to the carton</label>
+          <p id="colour-hint" class="colour-hint">Your logo keeps its original colours.</p>
+          <div class="control-label accent-label">Accent &amp; trim</div><div class="colour-swatches" role="group" aria-label="Label accent colour">
             <button type="button" data-accent="#2c707a" aria-pressed="true" aria-label="Ocean teal" style="--swatch:#2c707a"><span></span></button>
             <button type="button" data-accent="#6a805f" aria-pressed="false" aria-label="Botanical green" style="--swatch:#6a805f"><span></span></button>
             <button type="button" data-accent="#253d5b" aria-pressed="false" aria-label="Midnight blue" style="--swatch:#253d5b"><span></span></button>
@@ -110,6 +122,8 @@
             <button type="button" data-accent="#7c7396" aria-pressed="false" aria-label="Soft lavender" style="--swatch:#7c7396"><span></span></button>
           </div>
           <div class="finish-grid"><div><span class="control-label">Bottle</span><div class="segmented" role="group" aria-label="Bottle finish"><button type="button" data-bottle="amber" aria-pressed="true"><i class="finish-dot amber"></i>Amber</button><button type="button" data-bottle="white" aria-pressed="false"><i class="finish-dot white"></i>White</button></div></div><div><span class="control-label">Cap</span><div class="segmented" role="group" aria-label="Cap finish"><button type="button" data-cap="ivory" aria-pressed="true"><i class="finish-dot ivory"></i>Ivory</button><button type="button" data-cap="black" aria-pressed="false"><i class="finish-dot black"></i>Black</button></div></div></div>
+          <div class="colour-input-grid material-colours"><label class="colour-input"><span>Custom bottle</span><span class="colour-input-control"><input id="bottle-color" type="color" value="#f2f0e8" aria-label="Custom bottle colour"><output id="bottle-color-value" for="bottle-color">#F2F0E8</output></span></label><label class="colour-input"><span>Custom cap</span><span class="colour-input-control"><input id="cap-color" type="color" value="#e6e3d6" aria-label="Custom cap colour"><output id="cap-color-value" for="cap-color">#E6E3D6</output></span></label></div>
+          <div class="surface-finish"><span class="control-label">Surface finish</span><div class="segmented" role="group" aria-label="Surface finish"><button type="button" data-surface-finish="matte" aria-pressed="false">Soft matte</button><button type="button" data-surface-finish="satin" aria-pressed="true">Satin sheen</button></div></div>
           <div class="style-field"><span class="control-label">Label style</span><div class="label-style-options" role="group" aria-label="Label style"><button type="button" data-label-style="signature" aria-pressed="true"><i class="style-icon signature" aria-hidden="true"></i>Signature</button><button type="button" data-label-style="minimal" aria-pressed="false"><i class="style-icon minimal" aria-hidden="true"></i>Minimal</button></div></div>
           <details class="placement-details"><summary>Adjust logo placement <span aria-hidden="true">+</span></summary><div class="range-field"><label for="logo-scale">Logo size <output id="logo-scale-value" for="logo-scale">100%</output></label><input id="logo-scale" type="range" min="65" max="150" value="100" step="1"></div><div class="range-field"><label for="logo-position">Vertical position <output id="logo-position-value" for="logo-position">0</output></label><input id="logo-position" type="range" min="-15" max="15" value="0" step="1"></div></details>
         </section>
