@@ -382,7 +382,7 @@
       pressed('[data-cap]', 'data-cap', design.capFinish);
       pressed('[data-label-style]', 'data-label-style', design.labelStyle);
       pressed('[data-surface-finish]', 'data-surface-finish', design.surfaceFinish);
-      pressed('[data-view]', 'data-view', selectedView);
+      pressed('button[data-view]', 'data-view', selectedView);
       syncColors();
       syncCameraButtons();
     }
@@ -441,7 +441,7 @@
 
     function syncAvailability() {
       var unavailable = sceneState !== 'ready';
-      all('[data-packaging], [data-bottle], [data-cap], [data-label-style], [data-surface-finish], [data-view], #rotate-left, #rotate-right, #reset-view, #cap-color, #bottle-color').forEach(function (button) {
+      all('[data-packaging], [data-bottle], [data-cap], [data-label-style], [data-surface-finish], button[data-view], #rotate-left, #rotate-right, #reset-view, #cap-color, #bottle-color').forEach(function (button) {
         button.disabled = unavailable;
         if (sceneState === 'fallback') button.title = 'This control needs the 3D preview. Logo, text and color remain available below.';
         else button.removeAttribute('title');
@@ -535,7 +535,7 @@
       if (enabled === autoRotate) { syncCameraButtons(); return; }
       if (callScene('setAutoRotate', enabled)) autoRotate = enabled;
       else autoRotate = false;
-      if (autoRotate) { selectedView = ''; pressed('[data-view]', 'data-view', selectedView); }
+      if (autoRotate) { selectedView = ''; pressed('button[data-view]', 'data-view', selectedView); }
       syncCameraButtons();
     }
 
@@ -548,7 +548,7 @@
     function moveCamera(method, value) {
       setAutoRotation(false);
       selectedView = '';
-      pressed('[data-view]', 'data-view', '');
+      pressed('button[data-view]', 'data-view', '');
       callScene(method, value);
     }
 
@@ -719,12 +719,12 @@
         callScene('setPackaging', packaging);
       });
     });
-    all('[data-view]').forEach(function (button) {
+    all('button[data-view]').forEach(function (button) {
       listen(button, 'click', function () {
         if (button.disabled || !viewNames.includes(button.dataset.view)) return;
         setAutoRotation(false);
         selectedView = button.dataset.view;
-        pressed('[data-view]', 'data-view', selectedView);
+        pressed('button[data-view]', 'data-view', selectedView);
         callScene('setView', selectedView);
       });
     });
@@ -743,17 +743,17 @@
       if (detail.source === 'auto') {
         // Continuous animation has no new design revision. It stops before PNG capture.
         selectedView = '';
-        pressed('[data-view]', 'data-view', '');
+        pressed('button[data-view]', 'data-view', '');
         return;
       }
       selectedView = detail.source === 'control' && viewNames.includes(detail.view) ? detail.view : '';
-      pressed('[data-view]', 'data-view', selectedView);
+      pressed('button[data-view]', 'data-view', selectedView);
       if (!cameraCommandDepth) { designVersion += 1; invalidateDownload(); }
       syncCameraButtons();
     });
     listen(byId('reset-view'), 'click', function () {
       setAutoRotation(false);
-      selectedView = 'angle'; pressed('[data-view]', 'data-view', selectedView);
+      selectedView = 'angle'; pressed('button[data-view]', 'data-view', selectedView);
       callScene('resetView');
     });
     function onReducedMotionChange() {
